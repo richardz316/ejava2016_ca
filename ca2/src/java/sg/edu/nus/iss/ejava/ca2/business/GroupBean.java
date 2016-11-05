@@ -5,41 +5,40 @@
  */
 package sg.edu.nus.iss.ejava.ca2.business;
 
-import java.util.UUID;
 import javax.annotation.Resource;
 import javax.ejb.SessionContext;
 import javax.ejb.Stateless;
+import javax.ejb.TransactionAttribute;
+import static javax.ejb.TransactionAttributeType.MANDATORY;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import sg.edu.nus.iss.ejava.ca2.model.Users;
+import sg.edu.nus.iss.ejava.ca2.model.Groups;
 
 /**
  *
- * @author rzhao
+ * @author E0015387
  */
 
 @Stateless
-public class UserBean {
+public class GroupBean {
     
     @PersistenceContext
     private EntityManager em;
     
     @Resource SessionContext ctx;
     
-    public void add(String userid, String password) {
-        Users users = new Users();
+    @TransactionAttribute(MANDATORY)
+    public void add(String groupid, String userid) {
         
-        users.setUserid(userid);
-        users.setPassword(password);
+        if (!ctx.getRollbackOnly()) {
+            Groups groups = new Groups();
         
-        try {
-            em.persist(users);
+            groups.setGroupid(groupid);
+            groups.setUserid(userid);
+        
+            em.persist(groups);
         }
         
-        catch(Exception e) {
-            ctx.setRollbackOnly();
-        }
     }
     
-
 }

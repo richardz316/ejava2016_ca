@@ -23,9 +23,7 @@ public class Groups implements Serializable {
     @Id
     private String groupid;
     
-    @OneToOne
-    @JoinColumn( name = "userid", referencedColumnName = "userid")
-    private Users users;
+    private String userid;
 
     public String getGroupid() {
         return groupid;
@@ -35,13 +33,15 @@ public class Groups implements Serializable {
         this.groupid = groupid;
     }
 
-    public Users getUsers() {
-        return users;
+    public String getUserid() {
+        return userid;
     }
 
-    public void setUsers(Users users) {
-        this.users = users;
+    public void setUserid(String userid) {
+        this.userid = userid;
     }
+
+    
     
     
     
