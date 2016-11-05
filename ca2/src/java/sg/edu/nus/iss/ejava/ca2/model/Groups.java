@@ -5,10 +5,17 @@
  */
 package sg.edu.nus.iss.ejava.ca2.model;
 
+import java.io.Serializable;
+
 /**
  *
  * @author E0015387
  */
-public class Groups {
+public class Groups implements Serializable {
+    
+    private static final long serialVersionUID = 1L;
+    
+    private String groupid;
+    private String userid;
     
 }
