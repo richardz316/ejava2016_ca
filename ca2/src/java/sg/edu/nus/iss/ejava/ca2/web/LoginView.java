@@ -68,9 +68,7 @@ public class LoginView implements Serializable {
             return ("");
         }
 
-        return "/secure/menu";
-        
-        //return "/secure/menu?faces-redirect=true";
+        return "/secure/menu?faces-redirect=true";
 
     }
     
@@ -79,7 +77,7 @@ public class LoginView implements Serializable {
         try {
             ut.begin();
             userBean.add(username, password);
-            groupBean.add("user role", username);
+            groupBean.add("usergroup", username);
             ut.commit();
             return "registersuccess";
         }
