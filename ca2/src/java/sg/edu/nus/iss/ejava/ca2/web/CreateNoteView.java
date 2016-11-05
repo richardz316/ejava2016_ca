@@ -68,8 +68,6 @@ public class CreateNoteView implements Serializable{
         note.setTitle(title);
         note.setCategory(category);
         note.setContent(content);
-        //Todo add the postdate in UI later
-        postdate = new Date();
         note.setPostdate(postdate);
         Principal p = FacesContext.getCurrentInstance().getExternalContext().getUserPrincipal();
         note.setUserid(p.getName());
