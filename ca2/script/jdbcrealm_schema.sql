@@ -6,6 +6,7 @@ use authdb;
 
 create table users (
 	userid varchar(32) not null,
+        username varchar(32) not null,
 	password varchar(128) not null,
 	primary key (userid)
 ) engine=InnoDB default charset=utf8;

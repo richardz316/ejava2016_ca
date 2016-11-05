@@ -1,16 +1,23 @@
 package sg.edu.nus.iss.ejava.ca2.model;
 
 import java.io.Serializable;
+import javax.persistence.Entity;
+import javax.persistence.Id;
 
 /**
  *
  * @author E0015387
  */
+
+@Entity
 public class Users implements Serializable {
     
     private static final long serialVersionUID = 1L;
     
+    @Id
     private String userid;
+    
+    private String username;
     private String password;
 
     public String getUserid() {
@@ -19,6 +26,14 @@ public class Users implements Serializable {
 
     public void setUserid(String userid) {
         this.userid = userid;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getPassword() {
