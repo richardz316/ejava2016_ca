@@ -5,8 +5,6 @@
  */
 package sg.edu.nus.iss.ejava.ca2.business;
 
-import java.util.Date;
-import java.util.UUID;
 import javax.annotation.Resource;
 import javax.ejb.SessionContext;
 import javax.ejb.Stateless;
