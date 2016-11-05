@@ -34,7 +34,7 @@ public class UserSession implements Serializable {
     
     public void setUserName(String n) {}
 
-    public void logout() {
+    public String logout() {
 
             ExternalContext ctx = FacesContext.getCurrentInstance().getExternalContext();
             HttpServletRequest req = (HttpServletRequest)ctx.getRequest();
@@ -43,9 +43,10 @@ public class UserSession implements Serializable {
                 HttpSession session = req.getSession();
 		System.out.println("logout user: " + req.getRemoteUser());
 		session.invalidate();
-		req.getRequestDispatcher("/faces/login.xhtml").forward(req, resp);
+		return "/login?faces-redirect=true";
             } catch (Exception ex) { ex.printStackTrace();}
             
+            return null;
     }
 	
 }
