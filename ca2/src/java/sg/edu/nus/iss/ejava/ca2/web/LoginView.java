@@ -53,7 +53,6 @@ public class LoginView implements Serializable {
         this.password = password;
     }
     
-    @PermitAll
     public String login() {
 
         HttpServletRequest req = (HttpServletRequest) FacesContext.getCurrentInstance()
@@ -72,7 +71,6 @@ public class LoginView implements Serializable {
 
     }
     
-    @PermitAll
     public String register() {
         try {
             ut.begin();
