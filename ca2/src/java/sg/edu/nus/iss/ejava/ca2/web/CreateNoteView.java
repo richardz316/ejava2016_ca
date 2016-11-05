@@ -3,44 +3,30 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package sg.edu.nus.iss.ejava.ca2.model;
+package sg.edu.nus.iss.ejava.ca2.web;
 
 import java.io.Serializable;
 import java.util.Date;
+import javax.ejb.EJB;
+import javax.faces.view.ViewScoped;
+import javax.inject.Named;
+import sg.edu.nus.iss.ejava.ca2.business.NoteBean;
+import sg.edu.nus.iss.ejava.ca2.model.Notes;
 
-/**
- *
- * @author E0015387
- */
-public class Notes implements Serializable {
+
+@ViewScoped
+@Named
+public class CreateNoteView implements Serializable{
     
     private static final long serialVersionUID = 1L;
     
-    private int noteid;
+    @EJB private NoteBean noteBean;
     
-    private String userid;
-    
+    private Notes note;
     private String title;
     private String category;
     private String content;
-    
     private Date postdate;
-
-    public int getNoteid() {
-        return noteid;
-    }
-
-    public void setNoteid(int noteid) {
-        this.noteid = noteid;
-    }
-
-    public String getUserid() {
-        return userid;
-    }
-
-    public void setUserid(String userid) {
-        this.userid = userid;
-    }
 
     public String getTitle() {
         return title;
@@ -73,5 +59,19 @@ public class Notes implements Serializable {
     public void setPostdate(Date postdate) {
         this.postdate = postdate;
     }
+    
+    public String createNote(){
+        note = new Notes();
+        note.setTitle(title);
+        note.setCategory(category);
+        note.setContent(content);
+        note.setPostdate(postdate);
+        
+        
+        
+        
+        return null;
+    }
+    
     
 }
