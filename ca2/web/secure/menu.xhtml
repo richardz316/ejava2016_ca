@@ -7,11 +7,13 @@
     </h:head>
     <h:body>
         <h1>Menu</h1>
-        Welcome. Please select the actions
+        Welcome #{userSession.username}. Please select the actions
         <h:form>
             <h:commandLink action="createnote" value="Create Note" />
             <br/>
             <h:commandLink action="postnote" value="Post Note" />
+            <br/>
+            <h:commandButton value="Logout" action="#{userSession.logout()}"/>
         </h:form>
     </h:body>
 </html>

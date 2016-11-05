@@ -11,6 +11,7 @@ package sg.edu.nus.iss.ejava.ca2.web;
  */
 import java.io.Serializable;
 import javax.annotation.Resource;
+import javax.annotation.security.PermitAll;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
@@ -51,7 +52,8 @@ public class LoginView implements Serializable {
     public void setPassword(String password) {
         this.password = password;
     }
-
+    
+    @PermitAll
     public String login() {
 
         HttpServletRequest req = (HttpServletRequest) FacesContext.getCurrentInstance()
@@ -66,10 +68,13 @@ public class LoginView implements Serializable {
             return ("");
         }
 
-        return ("/secure/menu");
+        return "/secure/menu";
+        
+        //return "/secure/menu?faces-redirect=true";
 
     }
-
+    
+    @PermitAll
     public String register() {
         try {
             ut.begin();
