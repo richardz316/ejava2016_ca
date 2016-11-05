@@ -16,6 +16,15 @@ create table groups (
 	primary key (groupid, userid)
 ) engine=InnoDB default charset=utf8;
 
+create table notes (
+	noteid int not null auto_increment primary key,
+	userid varchar(32) not null,
+        title varchar(32) not null,
+        category varchar(32) not null,
+        content mediumtext not null,
+        postdate datetime not null
+) engine=InnoDB default charset=utf8;
+
 /*
 	Create jdbcRealm
 	Add jdbc connection pool and jdbc resource
