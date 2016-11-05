@@ -8,8 +8,8 @@ package sg.edu.nus.iss.ejava.ca2.web;
 import java.io.Serializable;
 import java.security.Principal;
 import java.util.Date;
-import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
@@ -75,6 +75,9 @@ public class CreateNoteView implements Serializable{
         note.setUserid(p.getName());
         
         noteBean.add(note);
+        
+        FacesMessage m = new FacesMessage("Note "+ title+ " has been created!");
+	FacesContext.getCurrentInstance().addMessage(null, m);
         
         return "menu";
     }
