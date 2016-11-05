@@ -1,11 +1,11 @@
 $(function() {
-	var socket = new WebSocket("ws://localhost:8080/week04/chat");
+	var socket = new WebSocket("ws://localhost:8080/ca2/notedisplay");
 	socket.onopen = function() {
-		$("#chats").val("Connected\n" + $("#chats").val());
+		$("#notes").val("Connected\n" + $("#notes").val());
 	}
 	socket.onmessage = function(evt) {
 		var data = JSON.parse(evt.data);
-		$("#chats").val(data.time + ": " + data.text + "\n" + $("#chats").val());
+		$("#notes").val(data.time + ": " + data.text + "\n" + $("#notes").val());
 	}
 	$("#sendBtn").on("click", function() {
 		socket.send($("#message").val())
