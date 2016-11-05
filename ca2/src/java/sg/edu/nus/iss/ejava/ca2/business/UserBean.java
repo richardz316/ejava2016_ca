@@ -29,6 +29,8 @@ public class UserBean {
     public void add(String userid, String password) {
         Users users = new Users();
         
+        
+        
         users.setUserid(userid);
         users.setPassword(password);
         

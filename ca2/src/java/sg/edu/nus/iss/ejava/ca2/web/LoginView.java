@@ -74,7 +74,7 @@ public class LoginView implements Serializable {
         try {
             ut.begin();
             userBean.add(username, password);
-            groupBean.add("usergroup", username);
+            groupBean.add("user role", username);
             ut.commit();
             return "registersuccess";
         }
