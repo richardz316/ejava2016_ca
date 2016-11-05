@@ -3,6 +3,7 @@ package sg.edu.nus.iss.ejava.ca2.model;
 import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 
 /**
  *
@@ -19,6 +20,9 @@ public class Users implements Serializable {
     
     private String username;
     private String password;
+    
+    @OneToOne(mappedBy = "users")
+    private Groups groups;
 
     public String getUserid() {
         return userid;
@@ -42,6 +46,14 @@ public class Users implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public Groups getGroups() {
+        return groups;
+    }
+
+    public void setGroups(Groups groups) {
+        this.groups = groups;
     }
     
     
