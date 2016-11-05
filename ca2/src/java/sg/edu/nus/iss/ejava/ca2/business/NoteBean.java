@@ -6,8 +6,10 @@
 package sg.edu.nus.iss.ejava.ca2.business;
 
 import java.util.Date;
+import java.util.UUID;
 import javax.annotation.Resource;
 import javax.ejb.SessionContext;
+import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import sg.edu.nus.iss.ejava.ca2.model.Notes;
@@ -16,6 +18,7 @@ import sg.edu.nus.iss.ejava.ca2.model.Notes;
  *
  * @author rzhao
  */
+@Stateless
 public class NoteBean {
     
     @PersistenceContext
@@ -23,16 +26,8 @@ public class NoteBean {
     
     @Resource SessionContext ctx;
     
-    public void add(String userid, String title, String category, String content, Date postdate){
-        
-        Notes notes = new Notes();
-        notes.setUserid(userid);
-        notes.setTitle(title);
-        notes.setCategory(category);
-        notes.setContent(content);
-        notes.setPostdate(postdate);
-        
-        em.persist(notes);
+    public void add(Notes note){
+        em.persist(note);
     }
     
 }

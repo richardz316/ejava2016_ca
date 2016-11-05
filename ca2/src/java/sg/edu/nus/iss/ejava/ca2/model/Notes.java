@@ -7,15 +7,19 @@ package sg.edu.nus.iss.ejava.ca2.model;
 
 import java.io.Serializable;
 import java.util.Date;
+import javax.persistence.Entity;
+import javax.persistence.Id;
 
 /**
  *
  * @author E0015387
  */
+@Entity
 public class Notes implements Serializable {
     
     private static final long serialVersionUID = 1L;
     
+    @Id
     private int noteid;
     
     private String userid;
