@@ -7,8 +7,12 @@ package sg.edu.nus.iss.ejava.ca2.model;
 
 import java.io.Serializable;
 import java.util.Date;
+import javax.json.Json;
+import javax.json.JsonObject;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  *
@@ -28,6 +32,7 @@ public class Notes implements Serializable {
     private String category;
     private String content;
     
+    @Temporal(TemporalType.TIMESTAMP)
     private Date postdate;
 
     public int getNoteid() {
@@ -78,4 +83,12 @@ public class Notes implements Serializable {
         this.postdate = postdate;
     }
     
+    public JsonObject toJSON() {
+        return (Json.createObjectBuilder()
+            .add("Title", title)
+            .add("Posted", postdate.toString())
+            .add("User", userid)
+            .add("Content", content)
+            .build());
+    }
 }

@@ -80,16 +80,11 @@ public class CreateNoteView implements Serializable{
         
         noteBean.add(note);
         
-        JsonObject jsonObj = Json.createObjectBuilder()
-				.add("title", title)
-                                .add("category", category)
-				.add("postdate", (postdate).toString())
-                                .add("userid", note.getUserid())
-				.build();
+        JsonObject jsonObj = note.toJSON();
         
         sessionStore.sendToAllConnectedSessions(category, jsonObj.toString());//notify all the clients in that category
         
-        FacesMessage m = new FacesMessage("Note "+ title+ " has been created!");
+        FacesMessage m = new FacesMessage("Note "+ title + " has been created!");
 	FacesContext.getCurrentInstance().addMessage(null, m);
         
         return "menu";
