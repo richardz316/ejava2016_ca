@@ -3,7 +3,9 @@ package sg.edu.nus.iss.ejava.ca2.web;
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
+import javax.annotation.Resource;
 import javax.ejb.EJB;
+import javax.enterprise.concurrent.ManagedExecutorService;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.json.Json;
@@ -21,7 +23,9 @@ import sg.edu.nus.iss.ejava.ca2.model.Notes;
 @RequestScoped
 @ServerEndpoint("/note/{category}")
 public class NoteEndpoint {
-
+    
+    @Resource(lookup="concurrent/myThreadPool") private ManagedExecutorService service;
+    
     @Inject SessionStore sessionStore;
     
     @EJB private NoteBean noteBean;
@@ -52,7 +56,9 @@ public class NoteEndpoint {
     @OnMessage
     public void message(Session session, String text, @PathParam("category") String category) {
         System.out.println(">>> client sent a message: " + text);
-        sessionStore.lock(() -> { sessionStore.sendToAllConnectedSessions(category, text); });
+        service.submit(() -> {
+            sessionStore.lock(() -> { sessionStore.sendToAllConnectedSessions(category, text); });
+        });
     }
 
     @OnClose
