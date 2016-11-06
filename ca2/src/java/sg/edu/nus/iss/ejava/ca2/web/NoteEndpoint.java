@@ -28,34 +28,36 @@ public class NoteEndpoint {
 
     @OnOpen
     public void open(Session session, @PathParam("category") String category) {
-
-        sessionStore.add(category, session);
-        System.out.println(">>> category: " + category);
-        System.out.println(">>> session id: " + session.getId());
         
-        Optional<List<Notes>> notes = noteBean.findAllOrCategory(category);
-        JsonArrayBuilder arrBuilder = Json.createArrayBuilder();
+        sessionStore.lock(() -> { 
+            sessionStore.add(category, session);
+            System.out.println(">>> category: " + category);
+            System.out.println(">>> session id: " + session.getId());
 
-        List<Notes> sortedNotes = notes.get();
-        sortedNotes.sort((n1,n2) -> n2.getPostdate().compareTo(n1.getPostdate()));
-        sortedNotes.stream().map(c -> {return(c.toJSON());})
-            .forEach(j -> {arrBuilder.add(j);});
-        
-        final JsonObject message = Json.createObjectBuilder()
-                                        .add("message", arrBuilder.build().toString())
-					.build();
-        sessionStore.sendToSession(session, message);
+            Optional<List<Notes>> notes = noteBean.findAllOrCategory(category);
+            JsonArrayBuilder arrBuilder = Json.createArrayBuilder();
+
+            List<Notes> sortedNotes = notes.get();
+            sortedNotes.sort((n1,n2) -> n2.getPostdate().compareTo(n1.getPostdate()));
+            sortedNotes.stream().map(c -> {return(c.toJSON());})
+                .forEach(j -> {arrBuilder.add(j);});
+
+            final JsonObject message = Json.createObjectBuilder()
+                                            .add("message", arrBuilder.build().toString())
+                                            .build();
+            sessionStore.sendToSession(session, message);
+        });
     }
 
     @OnMessage
     public void message(Session session, String text, @PathParam("category") String category) {
         System.out.println(">>> client sent a message: " + text);
-        sessionStore.sendToAllConnectedSessions(category, text);
+        sessionStore.lock(() -> { sessionStore.sendToAllConnectedSessions(category, text); });
     }
 
     @OnClose
     public void onClose(Session session, @PathParam("category") String category) throws IOException {
        System.out.println(">>> on Close. ");
-       sessionStore.remove(category, session);
+       sessionStore.lock(() -> { sessionStore.remove(category, session); });
     }
 }
