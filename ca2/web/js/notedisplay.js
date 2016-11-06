@@ -1,7 +1,7 @@
 $(function() {
     
     var buildHtmlTable = function(notes){            
-        $("#notetable").children('tr').remove();
+        $("#notetable").children('tbody').remove();
         var columns = addAllColumnHeaders(notes);
 
         for (var i = 0 ; i < notes.length ; i++) {
