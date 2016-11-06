@@ -94,6 +94,7 @@ public class Notes implements Serializable {
             .add("Title", title)
             .add("Posted", postdate.toString())
             .add("User", userid)
+            .add("Category", category)
             .add("Content", content)
             .build());
     }
