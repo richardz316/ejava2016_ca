@@ -11,6 +11,8 @@ import javax.json.Json;
 import javax.json.JsonObject;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -19,6 +21,10 @@ import javax.persistence.TemporalType;
  * @author E0015387
  */
 @Entity
+@NamedQueries({
+    @NamedQuery(name = "Notes.findAll", query = "SELECT n FROM Notes n"),
+    @NamedQuery(name = "Notes.findByCategory", query = "SELECT n FROM Notes n WHERE n.category = :category"),
+    @NamedQuery(name = "Notes.findByUserid", query = "SELECT n FROM Notes n WHERE n.userid = :userid")})
 public class Notes implements Serializable {
     
     private static final long serialVersionUID = 1L;
