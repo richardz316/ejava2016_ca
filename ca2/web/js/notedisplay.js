@@ -1,6 +1,8 @@
-$(function() {
+
+    var socket;
+    var serviceLocation = "ws://localhost:8080/ca2/note/";
     
-    var buildHtmlTable = function(notes){            
+    function buildHtmlTable(notes){            
         $("#notetable").children('tbody').remove();
         var columns = addAllColumnHeaders(notes);
 
@@ -17,7 +19,7 @@ $(function() {
         }
     }
     
-    var addAllColumnHeaders = function(notes) {
+    function addAllColumnHeaders(notes) {
         var columnSet = [];
         var headerTr$ = $('<tr/>');
 
@@ -34,15 +36,20 @@ $(function() {
 
         return columnSet;
     }
+
+    function onMessageReceived(evt) {
+        var data = JSON.parse(evt.data);
+        buildHtmlTable(JSON.parse(data.message));
+    }
     
-    $("#searchBtn").on("click", function() {
-        var socket = new WebSocket("ws://localhost:8080/ca2/note/" + $("#category").val());
-        socket.onopen = function() {
-        }
-        
-        socket.onmessage = function(evt) {
-            var data = JSON.parse(evt.data);
-            buildHtmlTable(JSON.parse(data.message));
-        }
-    })
-})
+    function connectToServer() {
+        socket = new WebSocket("ws://localhost:8080/ca2/note/" + $("#category").val());
+        socket.onmessage = onMessageReceived;
+    }
+
+    $(document).ready(function() {
+
+        $('#searchBtn').click(function(evt) {
+            connectToServer();
+        });
+    });
