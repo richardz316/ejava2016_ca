@@ -57,19 +57,26 @@ public class NoteEndpoint {
     public void message(@Observes NotesEvent notesEvent) {
         System.out.println(">>> observing a message: " + notesEvent);
         service.submit(() -> {
-            Optional<List<Notes>> notes = noteBean.findAllOrCategory(notesEvent.getCategory());
-            JsonArrayBuilder arrBuilder = Json.createArrayBuilder();
-
-            List<Notes> sortedNotes = notes.get();
-            sortedNotes.sort((n1,n2) -> n2.getPostdate().compareTo(n1.getPostdate()));
-            sortedNotes.stream().map(c -> {return(c.toJSON());})
-                .forEach(j -> {arrBuilder.add(j);});
-
-            final JsonObject message = Json.createObjectBuilder()
-                                            .add("message", arrBuilder.build().toString())
-                                            .build();
-            sessionStore.lock(() -> { sessionStore.sendToAllConnectedSessions(notesEvent.getCategory(), message); });
+            sessionStore.lock(() -> {
+                populateAndUpdate(notesEvent.getCategory());
+                populateAndUpdate("All");
+            });
         });
+    }
+    
+    private void populateAndUpdate(String category) {
+        Optional<List<Notes>> notes = noteBean.findAllOrCategory(category);
+        JsonArrayBuilder arrBuilder = Json.createArrayBuilder();
+
+        List<Notes> sortedNotes = notes.get();
+        sortedNotes.sort((n1,n2) -> n2.getPostdate().compareTo(n1.getPostdate()));
+        sortedNotes.stream().map(c -> {return(c.toJSON());})
+            .forEach(j -> {arrBuilder.add(j);});
+
+        final JsonObject message = Json.createObjectBuilder()
+                                        .add("message", arrBuilder.build().toString())
+                                        .build();
+        sessionStore.sendToAllConnectedSessions(category, message); 
     }
 
     @OnClose
