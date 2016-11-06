@@ -19,14 +19,14 @@ public class NoteEndpoint {
 	@OnOpen
 	public void open(Session session, @PathParam("category") String category) {
 		
-                sessionStore.add(category, session);
-                System.out.println(">>> category: " + category);
-		System.out.println(">>> session id: " + session.getId());
+            sessionStore.add(category, session);
+            System.out.println(">>> category: " + category);
+            System.out.println(">>> session id: " + session.getId());
 	}
 
 	@OnMessage
 	public void message(String text) {
-		System.out.println(">>> client sent a message: " + text);
+            System.out.println(">>> client sent a message: " + text);
 	}
         
         @OnClose
