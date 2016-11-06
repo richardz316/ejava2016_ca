@@ -14,24 +14,24 @@ import javax.websocket.server.ServerEndpoint;
 @ServerEndpoint("/note/{category}")
 public class NoteEndpoint {
 
-	@Inject SessionStore sessionStore;
+    @Inject SessionStore sessionStore;
 
-	@OnOpen
-	public void open(Session session, @PathParam("category") String category) {
-		
-            sessionStore.add(category, session);
-            System.out.println(">>> category: " + category);
-            System.out.println(">>> session id: " + session.getId());
-	}
+    @OnOpen
+    public void open(Session session, @PathParam("category") String category) {
 
-	@OnMessage
-	public void message(String text) {
-            System.out.println(">>> client sent a message: " + text);
-	}
-        
-        @OnClose
-        public void onClose(Session session) throws IOException {
-            System.out.println(">>> on Close. ");
-           //TODO remove the session from category
-        }
+        sessionStore.add(category, session);
+        System.out.println(">>> category: " + category);
+        System.out.println(">>> session id: " + session.getId());
+    }
+
+    @OnMessage
+    public void message(Session session, String text) {
+        System.out.println(">>> client sent a message: " + text);
+    }
+
+    @OnClose
+    public void onClose(Session session, @PathParam("category") String category) throws IOException {
+       System.out.println(">>> on Close. ");
+       sessionStore.remove(category, session);
+    }
 }
