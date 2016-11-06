@@ -6,7 +6,7 @@ $(function() {
         }
         socket.onmessage = function(evt) {
             var data = JSON.parse(evt.data);
-            $("#notes").val(data.time + ": " + data.text + "\n" + $("#notes").val());
+            $("#notes").val(data.message + "\n" + $("#notes").val());
         }
     })
 })

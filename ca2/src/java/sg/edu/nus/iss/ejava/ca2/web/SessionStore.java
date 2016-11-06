@@ -14,6 +14,7 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.enterprise.context.ApplicationScoped;
+import javax.json.JsonObject;
 import javax.websocket.Session;
 
 /**
@@ -55,6 +56,15 @@ public class SessionStore implements Serializable {
             sessionsForAll.add(session);
         }
         
+    }
+    
+     public void sendToSession(Session session, JsonObject message) {
+        try {
+            session.getBasicRemote().sendText(message.toString());
+            System.out.println(">>> Server sent a message to client: "+ message);
+        } catch (IOException ex) {
+            Logger.getLogger(CreateNoteView.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public void sendToAllConnectedSessions(String category, String message) {

@@ -38,7 +38,6 @@ public class UserSession implements Serializable {
 
             ExternalContext ctx = FacesContext.getCurrentInstance().getExternalContext();
             HttpServletRequest req = (HttpServletRequest)ctx.getRequest();
-            HttpServletResponse resp = (HttpServletResponse)ctx.getResponse();
             try {
                 HttpSession session = req.getSession();
 		System.out.println("logout user: " + req.getRemoteUser());

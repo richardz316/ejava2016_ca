@@ -31,11 +31,6 @@ public class NoteBean {
         em.persist(note);
     }
     
-    public Optional<List<Notes>> findAll(){
-        TypedQuery<Notes> query = em.createNamedQuery("Notes.findAll", Notes.class);
-        return (Optional.ofNullable(query.getResultList()));       
-    }
-    
     public Optional<List<Notes>> findByUserId(String userId){
         TypedQuery<Notes> query = em.createNamedQuery("Notes.findByUserid", Notes.class);
         query.setParameter("userid", userId);
@@ -43,10 +38,19 @@ public class NoteBean {
         return (Optional.ofNullable(query.getResultList()));       
     }
     
-    public Optional<List<Notes>> findByCategory(String category){
+    public Optional<List<Notes>> findAllOrCategory(String category){
+        return "All".equals(category) ? findAll() : findByCategory(category);
+    }
+    
+    private Optional<List<Notes>> findByCategory(String category){
         TypedQuery<Notes> query = em.createNamedQuery("Notes.findByCategory", Notes.class);
         query.setParameter("category", category);
         
+        return (Optional.ofNullable(query.getResultList()));       
+    }
+    
+    private Optional<List<Notes>> findAll(){
+        TypedQuery<Notes> query = em.createNamedQuery("Notes.findAll", Notes.class);
         return (Optional.ofNullable(query.getResultList()));       
     }
 }
