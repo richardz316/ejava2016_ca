@@ -39,7 +39,20 @@
 
     function onMessageReceived(evt) {
         var data = JSON.parse(evt.data);
-        buildHtmlTable(JSON.parse(data.message));
+        if (typeof data.message !== 'undefined') {
+            buildHtmlTable(JSON.parse(data.message));
+        }
+        
+        else {
+            var row$ = $('<tr/>');
+            row$.append($('<td/>').html(data.Title));
+            row$.append($('<td/>').html(data.Posted));
+            row$.append($('<td/>').html(data.User));
+            row$.append($('<td/>').html(data.Category));
+            row$.append($('<td/>').html(data.Content));
+            $('#notetable tr:first').after(row$);
+        }
+        
     }
     
     function connectToServer() {

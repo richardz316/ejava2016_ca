@@ -81,7 +81,7 @@ public class CreateNoteView implements Serializable{
         
         noteBean.add(note);
        
-        events.fire(new NotesEvent(note.getCategory()));
+        events.fire(new NotesEvent(note));
       
         FacesMessage m = new FacesMessage("Note "+ title + " has been created!");
 	FacesContext.getCurrentInstance().addMessage(null, m);

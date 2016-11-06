@@ -5,20 +5,22 @@
  */
 package sg.edu.nus.iss.ejava.ca2.web;
 
+import sg.edu.nus.iss.ejava.ca2.model.Notes;
+
 /**
  *
  * @author benjaminng
  */
 public class NotesEvent {
     
-    private final String category;
+    private final Notes notes;
     
-    public NotesEvent(String category) {
-        this.category = category;
+    public NotesEvent(Notes notes) {
+        this.notes = notes;
     }
 
-    public String getCategory() {
-        return category;
+    public Notes getNotes() {
+        return notes;
     }
     
     

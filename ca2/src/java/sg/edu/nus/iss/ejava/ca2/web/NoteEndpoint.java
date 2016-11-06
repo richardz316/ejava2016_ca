@@ -58,13 +58,17 @@ public class NoteEndpoint {
         System.out.println(">>> observing a message: " + notesEvent);
         service.submit(() -> {
             sessionStore.lock(() -> {
-                populateAndUpdate(notesEvent.getCategory());
-                populateAndUpdate("All");
+                JsonObject message = notesEvent.getNotes().toJSON();
+                sessionStore.sendToAllConnectedSessions(notesEvent.getNotes().getCategory(), message);
+                sessionStore.sendToAllConnectedSessions("All", message); 
+                
+                //populateAndUpdate(notesEvent.getCategory());
+                //populateAndUpdate("All");
             });
         });
     }
     
-    private void populateAndUpdate(String category) {
+    /*private void populateAndUpdate(String category) {
         Optional<List<Notes>> notes = noteBean.findAllOrCategory(category);
         JsonArrayBuilder arrBuilder = Json.createArrayBuilder();
 
@@ -77,7 +81,7 @@ public class NoteEndpoint {
                                         .add("message", arrBuilder.build().toString())
                                         .build();
         sessionStore.sendToAllConnectedSessions(category, message); 
-    }
+    }*/
 
     @OnClose
     public void onClose(Session session, @PathParam("category") String category) throws IOException {
