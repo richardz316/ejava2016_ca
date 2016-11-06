@@ -62,7 +62,7 @@ public class NoteEndpoint {
                 sessionStore.sendToAllConnectedSessions(notesEvent.getNotes().getCategory(), message);
                 sessionStore.sendToAllConnectedSessions("All", message); 
                 
-                //populateAndUpdate(notesEvent.getCategory());
+                //populateAndUpdate(notesEvent.getNotes().getCategory());
                 //populateAndUpdate("All");
             });
         });
