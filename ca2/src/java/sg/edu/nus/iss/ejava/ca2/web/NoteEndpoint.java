@@ -25,8 +25,9 @@ public class NoteEndpoint {
     }
 
     @OnMessage
-    public void message(Session session, String text) {
+    public void message(Session session, String text, @PathParam("category") String category) {
         System.out.println(">>> client sent a message: " + text);
+        sessionStore.sendToAllConnectedSessions(category, text);
     }
 
     @OnClose
