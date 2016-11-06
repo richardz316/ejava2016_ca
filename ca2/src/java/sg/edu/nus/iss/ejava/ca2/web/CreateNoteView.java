@@ -8,6 +8,7 @@ package sg.edu.nus.iss.ejava.ca2.web;
 import java.io.Serializable;
 import java.security.Principal;
 import java.util.Date;
+import javax.annotation.Resource;
 import javax.ejb.EJB;
 import javax.enterprise.event.Event;
 import javax.faces.application.FacesMessage;
@@ -17,6 +18,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.json.Json;
 import javax.json.JsonObject;
+import javax.transaction.UserTransaction;
 import sg.edu.nus.iss.ejava.ca2.business.NoteBean;
 import sg.edu.nus.iss.ejava.ca2.model.Notes;
 
@@ -30,6 +32,8 @@ public class CreateNoteView implements Serializable{
     @EJB private NoteBean noteBean;
     
     @Inject Event<NotesEvent> events;
+    
+    @Resource UserTransaction ut;
     
     private Notes note;
     private String title;
@@ -79,14 +83,24 @@ public class CreateNoteView implements Serializable{
         Principal p = FacesContext.getCurrentInstance().getExternalContext().getUserPrincipal();
         note.setUserid(p.getName());
         
-        noteBean.add(note);
-       
-        events.fire(new NotesEvent(note));
-      
-        FacesMessage m = new FacesMessage("Note "+ title + " has been created!");
-	FacesContext.getCurrentInstance().addMessage(null, m);
+        try {
+            ut.begin();
+            noteBean.add(note);
+            ut.commit();
+
+            events.fire(new NotesEvent(note));
+
+            FacesMessage m = new FacesMessage("Note "+ title + " has been created!");
+            FacesContext.getCurrentInstance().addMessage(null, m);
         
-        return "menu";
+            return "menu";
+        }
+        catch (Exception ex) {
+            FacesMessage msg = new FacesMessage("Error encountered. Please contact system admin");
+            FacesContext.getCurrentInstance().addMessage(null, msg);
+        }
+        
+        return null;
     }
     
 

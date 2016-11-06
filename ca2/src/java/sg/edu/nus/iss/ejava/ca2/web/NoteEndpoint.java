@@ -8,6 +8,7 @@ import javax.ejb.EJB;
 import javax.enterprise.concurrent.ManagedExecutorService;
 import javax.enterprise.context.RequestScoped;
 import javax.enterprise.event.Observes;
+import javax.enterprise.event.TransactionPhase;
 import javax.inject.Inject;
 import javax.json.Json;
 import javax.json.JsonArrayBuilder;
@@ -54,7 +55,7 @@ public class NoteEndpoint {
         });
     }
 
-    public void message(@Observes NotesEvent notesEvent) {
+    public void message(@Observes(during=TransactionPhase.AFTER_SUCCESS) NotesEvent notesEvent) {
         System.out.println(">>> observing a message: " + notesEvent);
         service.submit(() -> {
             sessionStore.lock(() -> {
