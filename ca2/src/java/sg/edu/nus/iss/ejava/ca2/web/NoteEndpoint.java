@@ -7,6 +7,7 @@ import javax.annotation.Resource;
 import javax.ejb.EJB;
 import javax.enterprise.concurrent.ManagedExecutorService;
 import javax.enterprise.context.RequestScoped;
+import javax.enterprise.event.Observes;
 import javax.inject.Inject;
 import javax.json.Json;
 import javax.json.JsonArrayBuilder;
@@ -53,11 +54,21 @@ public class NoteEndpoint {
         });
     }
 
-    @OnMessage
-    public void message(Session session, String text, @PathParam("category") String category) {
-        System.out.println(">>> client sent a message: " + text);
+    public void message(@Observes NotesEvent notesEvent) {
+        System.out.println(">>> observing a message: " + notesEvent);
         service.submit(() -> {
-            sessionStore.lock(() -> { sessionStore.sendToAllConnectedSessions(category, text); });
+            Optional<List<Notes>> notes = noteBean.findAllOrCategory(notesEvent.getCategory());
+            JsonArrayBuilder arrBuilder = Json.createArrayBuilder();
+
+            List<Notes> sortedNotes = notes.get();
+            sortedNotes.sort((n1,n2) -> n2.getPostdate().compareTo(n1.getPostdate()));
+            sortedNotes.stream().map(c -> {return(c.toJSON());})
+                .forEach(j -> {arrBuilder.add(j);});
+
+            final JsonObject message = Json.createObjectBuilder()
+                                            .add("message", arrBuilder.build().toString())
+                                            .build();
+            sessionStore.lock(() -> { sessionStore.sendToAllConnectedSessions(notesEvent.getCategory(), message); });
         });
     }
 

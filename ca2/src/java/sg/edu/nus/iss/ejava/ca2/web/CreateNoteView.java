@@ -9,6 +9,7 @@ import java.io.Serializable;
 import java.security.Principal;
 import java.util.Date;
 import javax.ejb.EJB;
+import javax.enterprise.event.Event;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
@@ -28,7 +29,7 @@ public class CreateNoteView implements Serializable{
     
     @EJB private NoteBean noteBean;
     
-    @Inject private SessionStore sessionStore;
+    @Inject Event<NotesEvent> events;
     
     private Notes note;
     private String title;
@@ -79,11 +80,9 @@ public class CreateNoteView implements Serializable{
         note.setUserid(p.getName());
         
         noteBean.add(note);
-        
-        JsonObject jsonObj = note.toJSON();
-        
-        sessionStore.sendToAllConnectedSessions(category, jsonObj.toString());//notify all the clients in that category
-        
+       
+        events.fire(new NotesEvent(note.getCategory()));
+      
         FacesMessage m = new FacesMessage("Note "+ title + " has been created!");
 	FacesContext.getCurrentInstance().addMessage(null, m);
         

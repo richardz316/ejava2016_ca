@@ -62,11 +62,11 @@ public class SessionStore implements Serializable {
         }
     }
 
-    public void sendToAllConnectedSessions(String category, String message) {
+    public void sendToAllConnectedSessions(String category, JsonObject message) {
         List<Session> sessions = categories.get(category);
         if(sessions != null && sessions.size() > 0){
             sessions.stream().forEach((session) -> {
-                sendToSession(sessions, session, message);
+                sendToSession(sessions, session, message.toString());
             });
         }
     }
