@@ -39,7 +39,6 @@ public class CreateNoteView implements Serializable{
     private String title;
     private String category;
     private String content;
-    private Date postdate;
 
     public String getTitle() {
         return title;
@@ -64,14 +63,6 @@ public class CreateNoteView implements Serializable{
     public void setContent(String content) {
         this.content = content;
     }
-
-    public Date getPostdate() {
-        return postdate;
-    }
-
-    public void setPostdate(Date postdate) {
-        this.postdate = postdate;
-    }
     
     public String createNote(){
         note = new Notes();
@@ -79,7 +70,7 @@ public class CreateNoteView implements Serializable{
         
         note.setCategory(category);
         note.setContent(content);
-        note.setPostdate(postdate);
+        note.setPostdate(new Date());
         Principal p = FacesContext.getCurrentInstance().getExternalContext().getUserPrincipal();
         note.setUserid(p.getName());
         
