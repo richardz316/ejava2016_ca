@@ -35,23 +35,25 @@ public class NoteEndpoint {
     @OnOpen
     public void open(Session session, @PathParam("category") String category) {
         
-        sessionStore.lock(() -> { 
-            sessionStore.add(category, session);
-            System.out.println(">>> category: " + category);
-            System.out.println(">>> session id: " + session.getId());
+        service.submit(() -> {
+            sessionStore.lock(() -> { 
+                sessionStore.add(category, session);
+                System.out.println(">>> category: " + category);
+                System.out.println(">>> session id: " + session.getId());
 
-            Optional<List<Notes>> notes = noteBean.findAllOrCategory(category);
-            JsonArrayBuilder arrBuilder = Json.createArrayBuilder();
+                Optional<List<Notes>> notes = noteBean.findAllOrCategory(category);
+                List<Notes> sortedNotes = notes.get();
+                
+                JsonArrayBuilder arrBuilder = Json.createArrayBuilder();
+                sortedNotes.sort((n1,n2) -> n2.getPostdate().compareTo(n1.getPostdate()));
+                sortedNotes.stream().map(n -> {return(n.toJSON());})
+                    .forEach(j -> {arrBuilder.add(j);});
 
-            List<Notes> sortedNotes = notes.get();
-            sortedNotes.sort((n1,n2) -> n2.getPostdate().compareTo(n1.getPostdate()));
-            sortedNotes.stream().map(c -> {return(c.toJSON());})
-                .forEach(j -> {arrBuilder.add(j);});
-
-            final JsonObject message = Json.createObjectBuilder()
-                                            .add("message", arrBuilder.build().toString())
-                                            .build();
-            sessionStore.sendToSession(session, message);
+                final JsonObject message = Json.createObjectBuilder()
+                                                .add("notes", arrBuilder.build().toString())
+                                                .build();
+                sessionStore.sendToSession(session, message);
+            });
         });
     }
 

@@ -39,8 +39,8 @@
 
     function onMessageReceived(evt) {
         var data = JSON.parse(evt.data);
-        if (typeof data.message !== 'undefined') {
-            buildHtmlTable(JSON.parse(data.message));
+        if (typeof data.notes !== 'undefined') {
+            buildHtmlTable(JSON.parse(data.notes));
         }
         
         else {
