@@ -23,15 +23,21 @@
         var columnSet = [];
         var headerTr$ = $('<tr/>');
 
-        for (var i = 0 ; i < notes.length ; i++) {
-            var rowHash = notes[i];
-            for (var key in rowHash) {
-                if ($.inArray(key, columnSet) == -1){
-                    columnSet.push(key);
-                    headerTr$.append($('<th/>').html(key));
-                }
-            }
-        }
+        columnSet.push("Title");
+        headerTr$.append($('<th/>').html("Title"));
+        
+        columnSet.push("Posted");
+        headerTr$.append($('<th/>').html("Posted"));
+        
+        columnSet.push("User");
+        headerTr$.append($('<th/>').html("User"));
+        
+        columnSet.push("Category");
+        headerTr$.append($('<th/>').html("Category"));
+        
+        columnSet.push("Content");
+        headerTr$.append($('<th/>').html("Content"));
+        
         $("#notetable").append(headerTr$);
 
         return columnSet;
