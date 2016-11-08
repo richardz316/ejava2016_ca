@@ -62,6 +62,9 @@
     }
     
     function connectToServer() {
+        if (typeof socket !== 'undefined' && socket.readyState === socket.OPEN) {
+            socket.close();
+        }
         socket = new WebSocket("ws://localhost:8080/ca2/note/" + $("#category").val());
         socket.onmessage = onMessageReceived;
     }

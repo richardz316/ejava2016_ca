@@ -89,6 +89,7 @@ public class NoteEndpoint {
     @OnClose
     public void onClose(Session session, @PathParam("category") String category) throws IOException {
        System.out.println(">>> on Close. ");
+       System.out.println(">>> session id: " + session.getId());
        sessionStore.lock(() -> { sessionStore.remove(category, session); });
     }
 }
