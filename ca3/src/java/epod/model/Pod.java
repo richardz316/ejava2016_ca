@@ -25,7 +25,8 @@ import javax.persistence.TemporalType;
  */
 @Entity
 @NamedQueries({
-    @NamedQuery(name = "Pod.findAll", query = "SELECT p FROM Pod p")})
+    @NamedQuery(name = "Pod.findAll", query = "SELECT p FROM Pod p"),
+    @NamedQuery(name = "Pod.findByPodId", query = "SELECT p FROM Pod p WHERE p.podId = :podId")})
 public class Pod implements Serializable {
     
     private static final long serialVersionUID = 1L;

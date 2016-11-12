@@ -33,4 +33,11 @@ public class PodBean {
         return (Optional.ofNullable(query.getResultList()));       
     }
     
+    public Optional<List<Pod>> findByPodId(String podId){
+        TypedQuery<Pod> query = em.createNamedQuery("Pod.findByPodId", Pod.class);
+        query.setParameter("podId", podId);
+        
+        return (Optional.ofNullable(query.getResultList()));       
+    }
+    
 }
