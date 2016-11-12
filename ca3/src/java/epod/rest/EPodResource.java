@@ -41,15 +41,16 @@ public class EPodResource {
     @POST
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     public Response uploadFile(
-            @FormDataParam("epodId") String podId,
+            @FormDataParam("podId") String podId,
             @FormDataParam("note") String note,
             @FormDataParam("image") InputStream uploadedInputStream,
-	    @FormDataParam("image") FormDataContentDisposition  fileDetail,
             @FormDataParam("time") long time
         ) {
     
+        System.out.println("############ begin uploadFile ############");
+        
         // check if all form parameters are provided
-        if (podId == null || uploadedInputStream == null || fileDetail == null || time <= 0) {
+        if (podId == null || uploadedInputStream == null || time <= 0) {
             return Response.status(400).entity("Invalid form data").build();
         }
         
@@ -66,6 +67,7 @@ public class EPodResource {
         }
         
         if(errorMessage != null){
+            System.out.println("############ upload failed with error: "+ errorMessage);
             return Response.status(500).entity(errorMessage).build();
         }
         

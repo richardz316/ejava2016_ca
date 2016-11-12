@@ -44,7 +44,7 @@ public class UploadProxy extends HttpServlet {
 				.fileName("fish.png").build());
 
 		MultiPart formData = new FormDataMultiPart()
-				.field("epodId", "1", MediaType.TEXT_PLAIN_TYPE)
+				.field("podId", "1", MediaType.TEXT_PLAIN_TYPE)
 				.field("note", "test upload", MediaType.TEXT_PLAIN_TYPE)
 				.field("time", Long.toString(System.currentTimeMillis()), MediaType.TEXT_PLAIN_TYPE)
 				.bodyPart(imgPart);
