@@ -42,7 +42,6 @@ public class PodBean {
     }
 
     public void create(Delivery delivery) {
-        em.persist(delivery);
         Pod pod = new Pod();
         pod.setDelivery(delivery);
         em.persist(pod);

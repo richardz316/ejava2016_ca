@@ -9,6 +9,7 @@ import java.io.Serializable;
 import java.util.Date;
 import javax.json.Json;
 import javax.json.JsonObject;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -38,7 +39,7 @@ public class Pod implements Serializable {
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private int podId;
     
-    @OneToOne
+    @OneToOne(cascade = CascadeType.PERSIST)
     @JoinColumn( name = "pkg_id", referencedColumnName = "pkg_id")
     private Delivery delivery;
     
