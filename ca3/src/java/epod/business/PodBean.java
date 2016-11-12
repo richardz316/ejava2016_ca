@@ -40,6 +40,11 @@ public class PodBean {
         return em.find(Pod.class, podId);
     }
 
+    public List<Pod> checkAckId() {
+        TypedQuery<Pod> query = em.createNamedQuery("Pod.checkAckId", Pod.class);
+        return query.getResultList();
+    }
+
     public void create(Delivery delivery) {
         Pod pod = new Pod();
         pod.setDelivery(delivery);

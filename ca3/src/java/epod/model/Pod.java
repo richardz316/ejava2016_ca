@@ -29,28 +29,29 @@ import javax.persistence.TemporalType;
 @Entity
 @NamedQueries({
     @NamedQuery(name = "Pod.findAll", query = "SELECT p FROM Pod p"),
-    @NamedQuery(name = "Pod.findByPodId", query = "SELECT p FROM Pod p WHERE p.podId = :podId")})
+    @NamedQuery(name = "Pod.findByPodId", query = "SELECT p FROM Pod p WHERE p.podId = :podId"),
+    @NamedQuery(name = "Pod.checkAckId", query = "SELECT p FROM Pod p WHERE p.note IS NULL AND p.image IS NULL AND p.ackId IS NULL")})
 public class Pod implements Serializable {
-    
+
     private static final long serialVersionUID = 1L;
-    
+
     @Id
     @Column(name = "pod_id")
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int podId;
-    
+
     @OneToOne(cascade = CascadeType.PERSIST)
-    @JoinColumn( name = "pkg_id", referencedColumnName = "pkg_id")
+    @JoinColumn(name = "pkg_id", referencedColumnName = "pkg_id")
     private Delivery delivery;
-    
+
     private String note;
-    
+
     private byte[] image;
-    
+
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "delivery_date")
     private Date deliveryDate;
-    
+
     @Column(name = "ack_id")
     private String ackId;
 
@@ -101,15 +102,15 @@ public class Pod implements Serializable {
     public void setAckId(String ackId) {
         this.ackId = ackId;
     }
-    
+
     public JsonObject toJSON() {
         return (Json.createObjectBuilder()
-            .add("teamId", "41b26e1c")
-            .add("podId", podId)
-            .add("name", delivery.getName())
-            .add("address", delivery.getAddress())
-            .add("phone", delivery.getPhone())
-            .build());
-    } 
-    
+                .add("teamId", "41b26e1c")
+                .add("podId", podId)
+                .add("name", delivery.getName())
+                .add("address", delivery.getAddress())
+                .add("phone", delivery.getPhone())
+                .build());
+    }
+
 }
