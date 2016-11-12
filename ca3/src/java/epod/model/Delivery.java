@@ -45,8 +45,8 @@ public class Delivery implements Serializable {
     @Column(name = "create_date")
     private Date createDate;
     
-    @OneToOne(mappedBy = "pod")
-    private Pod prod;
+    //@OneToOne(mappedBy = "pod")
+    //private Pod prod;
 
     public int getPkgId() {
         return pkgId;
@@ -88,13 +88,13 @@ public class Delivery implements Serializable {
         this.createDate = createDate;
     }
 
-    public Pod getProd() {
+    /*public Pod getProd() {
         return prod;
     }
 
     public void setProd(Pod prod) {
         this.prod = prod;
-    }
+    }*/
     
     
     
