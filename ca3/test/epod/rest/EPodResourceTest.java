@@ -5,6 +5,7 @@
  */
 package epod.rest;
 
+import epod.business.PodBean;
 import epod.model.Delivery;
 import epod.model.Pod;
 import java.awt.image.BufferedImage;
@@ -22,7 +23,7 @@ public class EPodResourceTest {
     
     @Test
     public void testUpload() throws IOException {
-	EPodResource task = new EPodResource();
+	PodBean task = new PodBean();
 	Delivery deliver = new Delivery();
 	deliver.setPkgId(1);
 	deliver.setName("Tester");
@@ -42,7 +43,7 @@ public class EPodResourceTest {
         pod.setImage(imageInByte);
         
         
-	//task.sendToHq(pod);
+	task.sendToHq(pod);
 	
     }
 }
