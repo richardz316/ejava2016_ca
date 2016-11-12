@@ -33,7 +33,7 @@ public class EPodForwardHqTaskTest {
 	pod.setPodId(1);
 	pod.setNote("Testing123");
         
-        File fnew=new File("/tmp/rose.jpg");
+        File fnew=new File("C:\\Users\\Public\\Pictures\\Sample Pictures\\Desert.jpg");
         BufferedImage originalImage=ImageIO.read(fnew);
         ByteArrayOutputStream baos=new ByteArrayOutputStream();
         ImageIO.write(originalImage, "jpg", baos );
