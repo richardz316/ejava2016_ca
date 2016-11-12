@@ -17,16 +17,12 @@ import org.glassfish.jersey.media.multipart.MultiPartFeature;
  */
 @ApplicationPath("/")
 public class AppConfig extends Application{
-    
+    @Override
     public Set<Class<?>> getClasses() {
-        final Set<Class<?>> resources = new HashSet<Class<?>>();
-
-        // Add your resources.
-        resources.add(EPodResource.class);
-
-        // Add additional features such as support for Multipart.
-        resources.add(MultiPartFeature.class);
-
-        return resources;
+        Set<Class<?>> s = new HashSet<Class<?>>();
+        s.add(EPodResource.class);
+        s.add(MultiPartFeature.class);
+        s.add(ItemResource.class);
+        return s;
     }
 }
