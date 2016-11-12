@@ -18,11 +18,11 @@ import org.junit.Test;
  *
  * @author E0015387
  */
-public class EPodForwardHqTaskTest {
+public class EPodResourceTaskTest {
     
     @Test
     public void testUpload() throws IOException {
-	EPodForwardHqTask task = new EPodForwardHqTask();
+	EPodResource task = new EPodResource();
 	Delivery deliver = new Delivery();
 	deliver.setPkgId(1);
 	deliver.setName("Tester");
@@ -41,8 +41,7 @@ public class EPodForwardHqTaskTest {
         
         pod.setImage(imageInByte);
 
-	task.setPodData(pod);
-	task.run();
+	task.sendToHq(pod);
 	
     }
 }
