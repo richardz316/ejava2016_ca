@@ -1,0 +1,39 @@
+Add jersey-media-multipart.jar from $PAYARA_HOME/glassfish/modules directory to your NetBeans project
+
+Sample code
+
+	Client client = ClientBuilder.newBuilder()
+			.register(MultiPartFeature.class)
+			.build();
+
+	MultiPart part = new MultiPart();
+
+	//If uploading a file
+	FileDataBodyPart imgPart = new FileDataBodyPart("image", 
+			new File("/home/cmlee/Pictures/ca3.png"),
+			MediaType.APPLICATION_OCTET_STREAM_TYPE);
+
+	//or if upload a byte array
+	byte[] buffer = ... //Get bits from somewhere
+	FileDataBodyPart imgPart = new BodyPart(buffer, MediaType.APPLICATION_OCTET_STREAM_TYPE)
+
+	//This the the form field name
+	//<input type="file" name="image">
+	imgPart.setContentDisposition(
+			FormDataContentDisposition.name("image")
+			.fileName("ca3.png").build());
+
+	//Add other fields
+	MultiPart formData = new FormDataMultiPart()
+			.field("epodId", "abc123", MediaType.TEXT_PLAIN_TYPE)
+			.field("note", "a message", MediaType.TEXT_PLAIN_TYPE)
+			.field("time", Long.toString(System.currentTimeMillis()), MediaType.TEXT_PLAIN_TYPE)
+			.bodyPart(imgPart);
+	formData.setMediaType(MediaType.MULTIPART_FORM_DATA_TYPE);
+
+	WebTarget target = client.target("http://localhost:8080/epod/upload");
+	Invocation.Builder inv = target.request();
+
+	Response callResp = inv.post(Entity.entity(formData, formData.getMediaType()));
+
+	System.out.println(">> call resp:" + callResp.getStatus());
