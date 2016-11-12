@@ -23,7 +23,7 @@ import javax.ws.rs.core.MediaType;
  * @author E0015387
  */
 @RequestScoped
-@Path("/items")
+@Path("/api/items")
 public class ItemResource {
     
     @EJB private PodBean podBean;

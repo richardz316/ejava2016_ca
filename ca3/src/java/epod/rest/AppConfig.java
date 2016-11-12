@@ -12,7 +12,7 @@ import javax.ws.rs.core.Application;
  *
  * @author E0015387
  */
-@ApplicationPath("/api")
+@ApplicationPath("/")
 public class AppConfig extends Application{
     
 }
