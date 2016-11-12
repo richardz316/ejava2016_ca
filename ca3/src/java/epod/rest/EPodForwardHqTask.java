@@ -43,7 +43,7 @@ public class EPodForwardHqTask implements Runnable {
         
         imgPart.setContentDisposition(
 			FormDataContentDisposition.name("image")
-			.fileName("ca3.png").build());
+			.fileName("Desert.jpg").build());
 
 	//Add other fields
 	MultiPart formData = new FormDataMultiPart()

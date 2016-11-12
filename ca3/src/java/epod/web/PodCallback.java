@@ -27,6 +27,8 @@ public class PodCallback extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) {
+        
+        System.out.println(">>>> /callback");
 
         String ackId = request.getParameter("ackId");
         int podId = Integer.parseInt(request.getParameter("podId"));
