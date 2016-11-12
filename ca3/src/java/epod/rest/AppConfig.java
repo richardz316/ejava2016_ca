@@ -5,8 +5,11 @@
  */
 package epod.rest;
 
+import java.util.HashSet;
+import java.util.Set;
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
+import org.glassfish.jersey.media.multipart.MultiPartFeature;
 
 /**
  *
@@ -15,4 +18,15 @@ import javax.ws.rs.core.Application;
 @ApplicationPath("/")
 public class AppConfig extends Application{
     
+    public Set<Class<?>> getClasses() {
+        final Set<Class<?>> resources = new HashSet<Class<?>>();
+
+        // Add your resources.
+        resources.add(EPodResource.class);
+
+        // Add additional features such as support for Multipart.
+        resources.add(MultiPartFeature.class);
+
+        return resources;
+    }
 }
