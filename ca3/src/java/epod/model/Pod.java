@@ -36,7 +36,7 @@ public class Pod implements Serializable {
     private int podId;
     
     @OneToOne
-    @JoinColumn( name = "pkgId", referencedColumnName = "pkg_id")
+    @JoinColumn( name = "pkg_id", referencedColumnName = "pkg_id")
     private Delivery delivery;
     
     private String note;

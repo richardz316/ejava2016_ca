@@ -1,0 +1,41 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Pod tables</title>
+    </h:head>
+    <h:body>
+        <h:form>
+            <h1>Pod Table</h1>
+
+
+            <h:dataTable var="pod" value="#{podTableView.podItems}" border = "1" rendered="#{not empty podTableView.podItems}">
+
+                <h:column>
+                    <f:facet name="header">Deliver Date</f:facet>
+                        #{pod.deliveryDate}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">Note</f:facet>
+                        #{pod.note}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">ACK ID</f:facet>
+                        #{pod.ackId}
+                </h:column>
+<!--                <h:column>
+                   <h:graphicImage
+                    value="#{pod.image}"
+                    style="width:100px;" />
+                </h:column>-->
+            </h:dataTable>
+
+            <br/>
+
+        </h:form>
+
+    </h:body>
+</html>
+
