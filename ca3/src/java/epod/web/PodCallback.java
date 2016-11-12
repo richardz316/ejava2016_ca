@@ -27,34 +27,12 @@ public class PodCallback extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) {
-
         int podId = Integer.parseInt(request.getParameter("podId"));
         String ackId = request.getParameter("ackId");
-
-        System.out.println("pod: " + podId);
-        System.out.println("ack: " + ackId);
 
         Pod pod = podBean.findPod(podId);
 
         pod.setAckId(ackId);
         podBean.updateAckId(pod);
-
     }
-
-//    @GET
-//    public void updateAckID(@PathParam("podId") String podId, @PathParam("ackId") String ackId) { 
-//        System.out.println("pod: " + podId); 
-//        System.out.println("ack: " + ackId); 
-//        
-//        Pod pod = new Pod();        
-//        Optional<List<Pod>> podList = podBean.findByPodId(podId); 
-//        
-//        if(podList.isPresent()) {
-//            pod = podList.get().get(0); 
-//        }
-//        
-//        pod.setAckId(ackId);
-//        
-//        podBean.update(pod);        
-//    }
 }
