@@ -31,6 +31,9 @@ public class CheckAckTimer {
 
         if (podList.size() != 0) {
             System.out.println("Contain pods to resend: " + podList.size());
+            for(Pod pod : podList) {
+                podBean.sendToHq(pod);
+            }
         } else {
             System.out.println("Nothing to resend: " + podList.size());
         }

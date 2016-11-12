@@ -73,7 +73,7 @@ public class EPodResource {
         
         Pod pod = podBean.findPod(Integer.valueOf(podId));
         
-        sendToHq(pod);
+        podBean.sendToHq(pod);
         return Response.status(Response.Status.CREATED).build();
     }
 
@@ -94,7 +94,7 @@ public class EPodResource {
     
     public void sendToHq(Pod pod) {
         
-        System.out.println("--> Starting sendToHq");
+//        System.out.println("--> Starting sendToHq");
         
         Client client = ClientBuilder.newBuilder().register(MultiPartFeature.class).build();
 
