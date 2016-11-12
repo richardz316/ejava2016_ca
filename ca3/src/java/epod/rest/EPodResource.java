@@ -104,7 +104,7 @@ public class EPodResource {
 	MultiPart formData = new FormDataMultiPart()
 			.field("teamId", "41b26e1c", MediaType.TEXT_PLAIN_TYPE)
 			.field("podId", pod.getPodId(), MediaType.TEXT_PLAIN_TYPE)
-                        .field("callback", "http://192.168.56.1:8080/ca3/callback", MediaType.TEXT_PLAIN_TYPE)
+                        .field("callback", "http://10.10.24.213:8080/ca3/callback", MediaType.TEXT_PLAIN_TYPE)
                         .field("note", pod.getNote(), MediaType.TEXT_PLAIN_TYPE)
 			.field("image", buffer, MediaType.APPLICATION_OCTET_STREAM_TYPE);
 	formData.setMediaType(MediaType.MULTIPART_FORM_DATA_TYPE);
