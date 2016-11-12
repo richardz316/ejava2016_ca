@@ -45,7 +45,7 @@ public class Delivery implements Serializable {
     @Column(name = "create_date")
     private Date createDate;
     
-    @OneToOne(mappedBy = "prod")
+    @OneToOne(mappedBy = "pod")
     private Pod prod;
 
     public int getPkgId() {
