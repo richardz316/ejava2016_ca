@@ -5,6 +5,7 @@
  */
 package epod.business;
 
+import epod.model.Delivery;
 import epod.model.Pod;
 import java.util.List;
 import java.util.Optional;
@@ -21,23 +22,29 @@ import javax.persistence.TypedQuery;
  */
 @Stateless
 public class PodBean {
-    
-    
+
     @PersistenceContext
     private EntityManager em;
-    
-    @Resource SessionContext ctx;
-    
-    public Optional<List<Pod>> findAll(){
+
+    @Resource
+    SessionContext ctx;
+
+    public Optional<List<Pod>> findAll() {
         TypedQuery<Pod> query = em.createNamedQuery("Pod.findAll", Pod.class);
-        return (Optional.ofNullable(query.getResultList()));       
+        return (Optional.ofNullable(query.getResultList()));
     }
-    
-    public Optional<List<Pod>> findByPodId(String podId){
+
+    public Optional<List<Pod>> findByPodId(String podId) {
         TypedQuery<Pod> query = em.createNamedQuery("Pod.findByPodId", Pod.class);
         query.setParameter("podId", podId);
-        
-        return (Optional.ofNullable(query.getResultList()));       
+
+        return (Optional.ofNullable(query.getResultList()));
     }
-    
+
+    public void create(Delivery delivery) {
+        em.persist(delivery);
+        Pod pod = new Pod();
+        pod.setDelivery(delivery);
+        em.persist(pod);
+    }
 }
