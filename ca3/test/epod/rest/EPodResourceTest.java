@@ -18,7 +18,7 @@ import org.junit.Test;
  *
  * @author E0015387
  */
-public class EPodResourceTaskTest {
+public class EPodResourceTest {
     
     @Test
     public void testUpload() throws IOException {
@@ -40,8 +40,9 @@ public class EPodResourceTaskTest {
         byte[] imageInByte=baos.toByteArray();
         
         pod.setImage(imageInByte);
-
-	task.sendToHq(pod);
+        
+        
+	//task.sendToHq(pod);
 	
     }
 }

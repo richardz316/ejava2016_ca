@@ -73,7 +73,7 @@ public class EPodResource {
         
         Pod pod = podBean.findPod(Integer.valueOf(podId));
         
-        sendToHq(pod);
+        podBean.sendToHq(pod);
         return Response.status(Response.Status.CREATED).build();
     }
 
@@ -92,30 +92,6 @@ public class EPodResource {
         return buffer.toByteArray();
     }
     
-    public void sendToHq(Pod pod) {
-        
-        System.out.println("--> Starting sendToHq");
-        
-        Client client = ClientBuilder.newBuilder().register(MultiPartFeature.class).build();
-
-	byte[] buffer = pod.getImage();
-        
-	//Add other fields
-	MultiPart formData = new FormDataMultiPart()
-			.field("teamId", "41b26e1c", MediaType.TEXT_PLAIN_TYPE)
-			.field("podId", pod.getPodId(), MediaType.TEXT_PLAIN_TYPE)
-                        .field("callback", "http://192.168.56.1:8080/ca3/callback", MediaType.TEXT_PLAIN_TYPE)
-                        .field("note", pod.getNote(), MediaType.TEXT_PLAIN_TYPE)
-			.field("image", buffer, MediaType.APPLICATION_OCTET_STREAM_TYPE);
-	formData.setMediaType(MediaType.MULTIPART_FORM_DATA_TYPE);
-
-	WebTarget target = client.target("http://10.10.0.48:8080/epod/upload");
-	Invocation.Builder inv = target.request();
-
-	Response callResp = inv.post(Entity.entity(formData, formData.getMediaType()));
-
-	System.out.println(">> call resp:" + callResp.getStatus());
-
-    }
+    
 
 }
