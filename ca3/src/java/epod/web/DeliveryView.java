@@ -11,29 +11,36 @@ import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
-import javax.faces.bean.RequestScoped;
+import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
 /**
  *
  * @author E0015387
  */
-@RequestScoped
+@ViewScoped
 @Named
-public class DeliveryView {
+public class DeliveryView implements Serializable {
 
     @EJB
     private DeliveryBean deliveryBean;
+    
+    private List<Delivery> deliveryItems;
+    
+    @PostConstruct
+    private void init() {
 
-    public List<Delivery> getAllDelivery() {
-        List<Delivery> result = new LinkedList<>();
         Optional<List<Delivery>> deliveries = deliveryBean.getAllDelivery();
 
         if (deliveries.isPresent()) {
-            result = deliveries.get();
+            deliveryItems = deliveries.get();
         } 
-        return result;
+    }
+
+    public List<Delivery> getAllDelivery() {
+        return deliveryItems;
     }
     
 }
