@@ -31,7 +31,7 @@ public class DeliveryView {
         Optional<List<Delivery>> deliveries = deliveryBean.getAllDelivery();
 
         if (deliveries.isPresent()) {
-            result = deliveries.orElse(result);
+            result = deliveries.get();
         } 
         return result;
     }
