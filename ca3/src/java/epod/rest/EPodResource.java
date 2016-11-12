@@ -31,33 +31,34 @@ public class EPodResource {
 
     @POST
     @Consumes(MediaType.MULTIPART_FORM_DATA)
-    public Response uploadFile(@FormParam("epodId") String podId,
-            @FormParam("note") String note,
-//            @FormParmData("image") File file,
+    public Response uploadFile(
+            @FormDataParam("epodId") String podId,
+            @FormDataParam("note") String note,
             @FormDataParam("image") InputStream uploadedInputStream,
-	    @FormDataParam("image") FormDataContentDisposition fileDetail,
-            @FormParam("time") long time) {
+	    @FormDataParam("image") FormDataContentDisposition  fileDetail,
+            @FormDataParam("time") long time
+        ) {
     
         // check if all form parameters are provided
-//        if (podId == null || uploadedInputStream == null || fileDetail == null || time <= 0) {
-//            return Response.status(400).entity("Invalid form data").build();
-//        }
+        if (podId == null || uploadedInputStream == null || fileDetail == null || time <= 0) {
+            return Response.status(400).entity("Invalid form data").build();
+        }
         
         String errorMessage = null;
         
-//        try {
-//            podBean.savePod(Integer.valueOf(podId), note, saveFile(uploadedInputStream), new Date(time));
-//        } catch (IOException ex) {
-//            Logger.getLogger(EPodResource.class.getName()).log(Level.SEVERE, null, ex);
-//            errorMessage = "Save Pod failed!";
-//        } catch (PodNotFoundException ex) {
-//            Logger.getLogger(EPodResource.class.getName()).log(Level.SEVERE, null, ex);
-//            errorMessage = "pod is not found!";
-//        }
-//        
-//        if(errorMessage != null){
-//            return Response.status(500).entity(errorMessage).build();
-//        }
+        try {
+            podBean.savePod(Integer.valueOf(podId), note, saveFile(uploadedInputStream), new Date(time));
+        } catch (IOException ex) {
+            Logger.getLogger(EPodResource.class.getName()).log(Level.SEVERE, null, ex);
+            errorMessage = "Save Pod failed!";
+        } catch (PodNotFoundException ex) {
+            Logger.getLogger(EPodResource.class.getName()).log(Level.SEVERE, null, ex);
+            errorMessage = "pod is not found!";
+        }
+        
+        if(errorMessage != null){
+            return Response.status(500).entity(errorMessage).build();
+        }
         
         return Response.status(Response.Status.CREATED).build();
     }
