@@ -45,18 +45,21 @@ public class PodBean {
         pod.setDelivery(delivery);
         em.persist(pod);
     }
-    
-     public void savePod(int podId, String note, byte[] image, Date time) throws PodNotFoundException{
-        
+
+    public void savePod(int podId, String note, byte[] image, Date time) throws PodNotFoundException {
+
         Pod pod = findPod(podId);
-        if(pod == null){
+        if (pod == null) {
             throw new PodNotFoundException("Pod is not Found!");
         }
-        
+
         pod.setNote(note);
         pod.setImage(image);
         pod.setDeliveryDate(time);
 
-        
+    }
+
+    public void updateAckId(Pod pod) {
+        em.merge(pod);
     }
 }
