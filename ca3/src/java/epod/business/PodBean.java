@@ -5,8 +5,10 @@
  */
 package epod.business;
 
+import epod.exception.PodNotFoundException;
 import epod.model.Delivery;
 import epod.model.Pod;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import javax.annotation.Resource;
@@ -34,16 +36,27 @@ public class PodBean {
         return (Optional.ofNullable(query.getResultList()));
     }
 
-    public Optional<List<Pod>> findByPodId(String podId) {
-        TypedQuery<Pod> query = em.createNamedQuery("Pod.findByPodId", Pod.class);
-        query.setParameter("podId", podId);
-
-        return (Optional.ofNullable(query.getResultList()));
+    public Pod findPod(int podId) {
+        return em.find(Pod.class, podId);
     }
 
     public void create(Delivery delivery) {
         Pod pod = new Pod();
         pod.setDelivery(delivery);
         em.persist(pod);
+    }
+    
+     public void savePod(int podId, String note, byte[] image, Date time) throws PodNotFoundException{
+        
+        Pod pod = findPod(podId);
+        if(pod == null){
+            throw new PodNotFoundException("Pod is not Found!");
+        }
+        
+        pod.setNote(note);
+        pod.setImage(image);
+        pod.setDeliveryDate(time);
+
+        
     }
 }
