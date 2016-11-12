@@ -7,6 +7,8 @@ package epod.model;
 
 import java.io.Serializable;
 import java.util.Date;
+import javax.json.Json;
+import javax.json.JsonObject;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -99,6 +101,14 @@ public class Pod implements Serializable {
         this.ackId = ackId;
     }
     
-    
+    public JsonObject toJSON() {
+        return (Json.createObjectBuilder()
+            .add("teamId", "41b26e1c")
+            .add("podId", podId)
+            .add("name", delivery.getName())
+            .add("address", delivery.getAddress())
+            .add("phone", delivery.getPhone())
+            .build());
+    } 
     
 }
