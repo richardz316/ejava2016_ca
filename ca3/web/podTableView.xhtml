@@ -18,6 +18,22 @@
                         #{pod.deliveryDate}
                 </h:column>
                 <h:column>
+                    <f:facet name="header">Delivery Id</f:facet>
+                        #{pod.delivery.pkgId}
+                </h:column>
+                 <h:column>
+                    <f:facet name="header">Delivery Address</f:facet>
+                        #{pod.delivery.address}
+                </h:column>
+                 <h:column>
+                    <f:facet name="header">Delivery To </f:facet>
+                        #{pod.delivery.name}
+                </h:column>
+                 <h:column>
+                    <f:facet name="header">Delivery Phone</f:facet>
+                        #{pod.delivery.phone}
+                </h:column>
+                <h:column>
                     <f:facet name="header">Note</f:facet>
                         #{pod.note}
                 </h:column>
