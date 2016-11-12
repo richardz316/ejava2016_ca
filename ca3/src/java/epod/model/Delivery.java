@@ -46,7 +46,7 @@ public class Delivery implements Serializable {
     private Date createDate;
     
     @OneToOne(mappedBy = "prod")
-    private Prod prod;
+    private Pod prod;
 
     public int getPkgId() {
         return pkgId;
@@ -88,11 +88,11 @@ public class Delivery implements Serializable {
         this.createDate = createDate;
     }
 
-    public Prod getProd() {
+    public Pod getProd() {
         return prod;
     }
 
-    public void setProd(Prod prod) {
+    public void setProd(Pod prod) {
         this.prod = prod;
     }
     
