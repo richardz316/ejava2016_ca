@@ -30,7 +30,7 @@ import javax.persistence.TemporalType;
 @NamedQueries({
     @NamedQuery(name = "Pod.findAll", query = "SELECT p FROM Pod p"),
     @NamedQuery(name = "Pod.findByPodId", query = "SELECT p FROM Pod p WHERE p.podId = :podId"),
-    @NamedQuery(name = "Pod.checkAckId", query = "SELECT p FROM Pod p WHERE p.note IS NULL AND p.image IS NULL AND p.ackId IS NULL")})
+    @NamedQuery(name = "Pod.checkAckId", query = "SELECT p FROM Pod p WHERE p.note IS NOT NULL AND p.image IS NOT NULL AND p.ackId IS NULL")})
 public class Pod implements Serializable {
 
     private static final long serialVersionUID = 1L;
